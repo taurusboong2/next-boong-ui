@@ -15,11 +15,7 @@ const Buttons = () => {
         </Link>
       </Button>
       <Button icon>
-        <Link
-          href=""
-          onClick={() => {
-            router.back();
-          }}>
+        <Link href="">
           <Icon name="long arrow alternate left" />
         </Link>
       </Button>

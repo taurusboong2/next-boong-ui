@@ -7,8 +7,6 @@ import { useRouter } from 'next/router';
 const ArticleList = () => {
   const router = useRouter();
 
-  console.log(router);
-
   return (
     <Wrap>
       <Link href="/Detail">디테일로</Link>

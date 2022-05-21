@@ -16,7 +16,7 @@ export const useArticleDetail = (id?: number | string) => {
   return { article };
 };
 
-export const useArticleList = (page?: number | string, pageSize?: number | string) => {
+export const useArticleList = (page?: number | string | string[], pageSize?: number | string | string[]) => {
   const [articlesData, setArticlesData] = useState<ArticleListItem[]>();
   const [totalSize, setTotalSize] = useState(0);
   const [pageCount, setPageCount] = useState(0);
