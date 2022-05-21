@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import type { NextPage } from 'next';
 import styled from 'styled-components';
 import Header from '../components/Header';
@@ -6,10 +6,8 @@ import ArticleList from '../components/ArticleList';
 import Buttons from '../components/Buttons';
 
 const Home: NextPage = () => {
-  const nodeRef = useRef(null);
-
   return (
-    <Wrap ref={nodeRef}>
+    <Wrap>
       <Header title="Article List" />
       <Buttons />
       <ArticleList />
