@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-}
+  reactStrictMode: false,
+  presets: ['next/babel'],
+  plugins: [['babel-plugin-styled-components', { fileName: true, displayName: true, pure: true }]],
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
