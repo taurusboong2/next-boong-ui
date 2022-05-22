@@ -2,6 +2,7 @@ import React, { FC, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 interface currentPageType {
   startIndex: number;
@@ -18,6 +19,7 @@ type Props = {
 
 const Articles: FC<Props> = ({ page, setPage, pageSize, numPage, pageCount }) => {
   const router = useRouter();
+  console.log(`페이지사이즈일세`, pageSize);
 
   const NumberPage = Number(page);
 
@@ -36,7 +38,9 @@ const Articles: FC<Props> = ({ page, setPage, pageSize, numPage, pageCount }) =>
 
   const goPage = (number): void => {
     setPage(number);
-    router.push(`?page=${number}&pageSize=${pageSize}`);
+    // router.push(`?page=${number}&pageSize=${pageSize}`, `/pagination?page=${number}&pageSize=${pageSize}`, {
+    //   shallow: true,
+    // });
 
     if (number + 1 > currentPage.endIndex) {
       setCurrentPage({
@@ -100,7 +104,9 @@ const Articles: FC<Props> = ({ page, setPage, pageSize, numPage, pageCount }) =>
           <PageSpan
             onClick={() => setPage(number)}
             className={NumberPage === number ? 'page-link active' : 'page-link'}>
-            <LinkTo onClick={goPage}>{number}</LinkTo>
+            <span className="numSpan" onClick={goPage}>
+              {number}
+            </span>
           </PageSpan>
         </PageLi>
       );
@@ -230,6 +236,8 @@ const PageSpan = styled.span`
       background-color: #263a6c;
     }
   }
-`;
 
-const LinkTo = styled.div``;
+  .numSpan {
+    padding: 3px;
+  }
+`;
