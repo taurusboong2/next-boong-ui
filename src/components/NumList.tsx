@@ -238,6 +238,6 @@ const PageSpan = styled.span`
   }
 
   .numSpan {
-    padding: 3px;
+    padding: 0 3px;
   }
 `;

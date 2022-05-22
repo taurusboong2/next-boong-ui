@@ -2,14 +2,14 @@ import { api } from '../common/api';
 import { ArticleListRes, ArticleDetailRes, ArticleCreateValue } from '../types/article';
 import { sleep } from '../common/utils';
 
-export const fetchArticleList = async (page: number | string, pageSize: number | string) => {
+export const fetchArticleList = async (page: number | string | string[], pageSize: number | string | string[]) => {
   const response = await api.get<ArticleListRes>(
     `/api/articles/?pagination[page]=${page}&pagination[pageSize]=${pageSize}`
   );
   return response.data;
 };
 
-export const fetchArticleDetail = async (id: string | number) => {
+export const fetchArticleDetail = async (id: string | number | string[]) => {
   const response = await api.get<ArticleDetailRes>(`/api/articles/${id}`);
   return response;
 };
@@ -20,7 +20,7 @@ export const createArticle = async (data: ArticleCreateValue) => {
   console.log(response);
 };
 
-export const removeArticle = async (id: string | number) => {
+export const removeArticle = async (id: string | number | string[]) => {
   if (confirm('현재 Article을 삭제하시겠습니까?')) {
     await sleep(3000);
     const response = await api.delete<ArticleDetailRes>(`/api/articles/${id}`);

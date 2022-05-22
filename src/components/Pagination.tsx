@@ -1,6 +1,5 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
 import styled from 'styled-components';
-import Link from 'next/link';
 import { Card } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
 import { useArticleList } from '../hooks/article.hook';
@@ -19,10 +18,13 @@ const ArticleList = () => {
   }, [totalSize, pageSize]);
 
   console.log(`아티클 데이타 :`, articlesData);
-  console.log(totalSize);
-  console.log(pageCount);
-  console.log(page);
-  console.log(pageSize);
+
+  useEffect(() => {
+    if (pageSize && page) {
+      return;
+    }
+    router.push(`?page=1&pageSize=10`, `/pagination?page=1&pageSize=10`, { shallow: true });
+  }, [page, pageSize]);
 
   const onHandlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const newSize = e.currentTarget.value;
