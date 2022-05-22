@@ -1,17 +1,45 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import Link from 'next/link';
 import { Card } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
+import { useArticleList } from '../hooks/article.hook';
+import NumList from '../components/NumList';
 
-const ArticleList = ({ data }) => {
+type ArticleListProps = {
+  page: string | string[] | undefined;
+  pageSize: string | undefined;
+};
+
+const ArticleList = ({ page, pageSize }: ArticleListProps) => {
   const router = useRouter();
 
-  const { articlesData, totalSize, pageCount } = data;
+  const { articlesData, totalSize, pageCount } = useArticleList(page, pageSize);
+
+  const numPage = useMemo(() => {
+    if (!totalSize || !pageSize) return 0;
+    return Math.ceil(totalSize / parseInt(pageSize));
+  }, [totalSize, pageSize]);
 
   console.log(`아티클 데이타 :`, articlesData);
   console.log(totalSize);
   console.log(pageCount);
+  console.log(page);
+  console.log(pageSize);
+
+  const onHandlePageChange = (newPage: number) => {
+    router.push(
+      `?page=${newPage + ''}&pageSize=${pageSize as string}`,
+      `/pagination?page=${newPage + ''}&pageSize=${pageSize as string}`,
+      { shallow: true }
+    );
+  };
+
+  if (!articlesData) {
+    return <div>로딩중..</div>;
+  } else if (!pageSize) {
+    return <>페이지 사이즈 오류</>;
+  }
 
   return (
     <Wrap>
@@ -20,13 +48,14 @@ const ArticleList = ({ data }) => {
         <Card.Group centered>
           {articlesData.map((e, i) => {
             return (
-              <Link key={e.id} href="">
+              <span key={i} onClick={() => router.push(`/Detail/${e.id}`)}>
                 <Card header={e.attributes.title} meta={e.id} description={e.attributes.description} />
-              </Link>
+              </span>
             );
           })}
         </Card.Group>
       </CardWrap>
+      <NumList page={page} setPage={onHandlePageChange} pageSize={pageSize} numPage={numPage} pageCount={pageCount} />
     </Wrap>
   );
 };

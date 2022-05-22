@@ -6,26 +6,34 @@ import { useRouter } from 'next/router';
 import Header from '../components/Header';
 import ArticleList from '../components/Pagination';
 import Buttons from '../components/Buttons';
-import { useArticleList } from '../hooks/article.hook';
+import NumList from '../components/NumList';
 
 const Home: NextPage = () => {
   const router = useRouter();
   console.log(router);
 
-  const page = router.query.page || undefined;
-  const pageSize = router.query.pageSize || undefined;
+  // const [pageState, setPageState] = useState<number>(1);
+  // const [pageSizeState, setPageSizeState] = useState<number>(10);
 
-  const { articlesData, totalSize, pageCount } = useArticleList(page, pageSize);
+  const { page, pageSize } = router.query || undefined;
 
   useEffect(() => {
-    router.push('?page=1&pageSize=10', '/pagination?page=1&pageSize=10', { shallow: true });
+    if (pageSize && page) {
+      return;
+    }
+    router.push(`?page=1&pageSize=10`, `/pagination?page=1&pageSize=10`, { shallow: true });
   }, []);
+
+  useEffect(() => {
+    console.log(`페이지변경`, page);
+    console.log(`페이지사이즈변경`, pageSize);
+  }, [page, pageSize]);
 
   return (
     <Wrap>
       <Header title="Article List" />
       <Buttons />
-      <ArticleList data={{ articlesData, totalSize, pageCount }} />
+      <ArticleList page={page} pageSize={pageSize} />
     </Wrap>
   );
 };
