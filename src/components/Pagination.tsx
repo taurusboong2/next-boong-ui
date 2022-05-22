@@ -5,13 +5,13 @@ import { useRouter } from 'next/router';
 import { useArticleList } from '../hooks/article.hook';
 import NumList from '../components/NumList';
 
-const ArticleList = () => {
+const ArticleList = ({ data }) => {
   const router = useRouter();
   console.log(router);
 
   const { page, pageSize } = router.query;
 
-  const { articlesData, totalSize, pageCount } = useArticleList(page, pageSize);
+  const { articlesData, totalSize, pageCount } = data;
 
   const numPage = useMemo(() => {
     if (!totalSize || !pageSize) return 0;

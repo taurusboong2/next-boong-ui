@@ -9,6 +9,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@types/react-router": "^5.1.18",
+    "@types/react-router-dom": "^5.3.3",
     "axios": "^0.27.2",
     "babel-plugin-styled-components": "^2.0.7",
     "next": "12.1.6",

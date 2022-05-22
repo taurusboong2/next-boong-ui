@@ -45,7 +45,7 @@ const Detail = () => {
           삭제
         </button>
         <button className="patchBtn">
-          <Link href={`/PatchArticle?${id}`}>수정</Link>
+          <Link href={`/Patch/${id}`}>수정</Link>
         </button>
       </BtnWrap>
     </Wrap>
