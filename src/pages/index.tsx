@@ -17,10 +17,6 @@ const Home: NextPage = () => {
 
   const { articlesData, totalSize, pageCount } = useArticleList(page, pageSize);
 
-  console.log(articlesData);
-  console.log(totalSize);
-  console.log(pageCount);
-
   useEffect(() => {
     router.push('?page=1&pageSize=10', '/pagination?page=1&pageSize=10', { shallow: true });
   }, []);
@@ -29,7 +25,7 @@ const Home: NextPage = () => {
     <Wrap>
       <Header title="Article List" />
       <Buttons />
-      <ArticleList />
+      <ArticleList data={{ articlesData, totalSize, pageCount }} />
     </Wrap>
   );
 };
