@@ -7,6 +7,7 @@ import NumList from '../components/NumList';
 
 const ArticleList = () => {
   const router = useRouter();
+  console.log(router);
 
   const { page, pageSize } = router.query;
 
@@ -20,10 +21,13 @@ const ArticleList = () => {
   console.log(`아티클 데이타 :`, articlesData);
 
   useEffect(() => {
-    if (pageSize && page) {
-      return;
+    const { pathname } = router;
+    console.log(pathname);
+    if (page !== router.query.counter) {
+      router.push(`?page=${page}&pageSize=${pageSize}`, `/pagination?page=${page}&pageSize=${pageSize}`, {
+        shallow: true,
+      });
     }
-    router.push(`?page=1&pageSize=10`, `/pagination?page=1&pageSize=10`, { shallow: true });
   }, [page, pageSize]);
 
   const onHandlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
