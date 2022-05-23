@@ -2,8 +2,8 @@ import React, { useMemo, useEffect } from 'react';
 import styled from 'styled-components';
 import { Card } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
-import { useArticleList } from '../hooks/article.hook';
 import NumList from '../components/NumList';
+import Link from 'next/link';
 
 const ArticleList = ({ data }) => {
   const router = useRouter();
@@ -49,6 +49,10 @@ const ArticleList = ({ data }) => {
 
   return (
     <Wrap>
+      <Link href="/Create">
+        <CreateBtn>CREATE</CreateBtn>
+      </Link>
+
       <select typeof="number" value={pageSize} onChange={onHandlePageSizeChange}>
         <option value={5}>5</option>
         <option value={10}>10</option>
@@ -92,3 +96,12 @@ const Wrap = styled.div`
 `;
 
 const CardWrap = styled.div``;
+
+const Button = styled.button`
+  min-width: 150px;
+  min-height: 20px;
+  margin: 10px 0;
+  cursor: pointer;
+`;
+
+const CreateBtn = styled(Button)``;

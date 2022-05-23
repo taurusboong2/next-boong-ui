@@ -20,15 +20,6 @@ const Home: NextPage = () => {
     router.push(`/?page=1&pageSize=10`, `/pagination?page=1&pageSize=10`, { shallow: true });
   }, [router.isReady]);
 
-  // useEffect(() => {
-  //   if (pageSize && page) {
-  //     return;
-  //   }
-  //   router.replace(`/${router.pathname}`, `/pagination?page=${page}&pageSize=${pageSize}`, {
-  //     shallow: true,
-  //   });
-  // }, [page, pageSize]);
-
   return (
     <Wrap>
       <Header title="Article List" />
