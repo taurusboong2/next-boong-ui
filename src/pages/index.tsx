@@ -8,40 +8,30 @@ import Header from '../components/Header';
 import ArticleList from '../components/Pagination';
 import Buttons from '../components/Buttons';
 
-type PaginationType = {
-  page?: number | string | string[] | undefined;
-  pageSize?: number | string | string[] | undefined;
-};
-
 const Home: NextPage = () => {
   const router = useRouter();
   const [pageValue, setPageValue] = useState<any>(1);
   const [pageSizeValue, setPageSizeValue] = useState<any>(10);
 
-  const { page, pageSize } = router.query;
+  const { page = 1, pageSize = 10 } = router.query;
+  console.log(`page: `, page);
+  console.log(`pageSize: `, pageSize);
 
   const { articlesData, totalSize, pageCount } = useArticleList(page, pageSize);
 
   useEffect(() => {
-    if (pageSize && page) {
-      return;
-    }
-    router.push(`/?page=1&pageSize=10`, `/pagination?page=1&pageSize=10`, { shallow: true });
-  }, [pageSize, page]);
-
-  useEffect(() => {
     if (router.isReady) {
-      setPageValue(page);
-      setPageSizeValue(pageSize);
-      router.push({
-        pathname: router.pathname,
-        query: {
-          page: pageValue,
-          pageSize: pageSizeValue,
-        },
+      router.push(`/?page=${page}&pageSize=${pageSize}`, `/pagination?page=${page}&pageSize=${pageSize}`, {
+        shallow: true,
       });
     }
-  }, [pageValue, pageSizeValue]);
+  }, [router.isReady]);
+
+  useEffect(() => {
+    router.push(`/?page=${page}&pageSize=${pageSize}`, `/pagination?page=${page}&pageSize=${pageSize}`, {
+      shallow: true,
+    });
+  }, [page, pageSize]);
 
   return (
     <Wrap>

@@ -27,6 +27,7 @@ export const useArticleList = (page?: number | string | string[], pageSize?: num
     }
     (async () => {
       fetchArticleList(page, pageSize).then(res => {
+        console.log(page, pageSize);
         const articleData = res.data;
         const articleMeta = res.meta;
         setArticlesData(articleData);

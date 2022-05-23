@@ -7,7 +7,6 @@ import Link from 'next/link';
 
 const ArticleList = ({ data }) => {
   const router = useRouter();
-  console.log(router);
 
   const { page, pageSize } = router.query;
 
@@ -18,12 +17,8 @@ const ArticleList = ({ data }) => {
     return Math.ceil(totalSize / Number(pageSize));
   }, [totalSize, pageSize]);
 
-  console.log(`아티클 데이타 :`, articlesData);
-
   useEffect(() => {
-    const { pathname } = router;
-    console.log(pathname);
-    if (page !== router.query.counter) {
+    if (page !== router.query.page) {
       router.push(`?page=${page}&pageSize=${pageSize}`, `/pagination?page=${page}&pageSize=${pageSize}`, {
         shallow: true,
       });

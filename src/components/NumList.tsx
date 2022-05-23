@@ -19,13 +19,11 @@ type Props = {
 
 const Articles: FC<Props> = ({ page, setPage, pageSize, numPage, pageCount }) => {
   const router = useRouter();
-  console.log(`페이지사이즈일세`, pageSize);
 
   const NumberPage = Number(page);
 
   const pageList: number[] = useMemo(() => {
     const pageCountArray = _.range(1, pageCount + 1);
-    console.log(pageCountArray);
     return pageCountArray;
   }, [pageCount]);
 
