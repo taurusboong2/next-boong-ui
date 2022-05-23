@@ -23,21 +23,25 @@ const Home: NextPage = () => {
   const { articlesData, totalSize, pageCount } = useArticleList(page, pageSize);
 
   useEffect(() => {
-    if (!router.isReady) return;
+    if (pageSize && page) {
+      return;
+    }
     router.push(`/?page=1&pageSize=10`, `/pagination?page=1&pageSize=10`, { shallow: true });
-  }, []);
+  }, [pageSize, page]);
 
   useEffect(() => {
-    if (router && router.query) {
+    if (router.isReady) {
       setPageValue(page);
       setPageSizeValue(pageSize);
-      router.push(
-        `/?page=${pageValue}&pageSize=${pageSizeValue}`,
-        `/pagination?page=${pageValue}&pageSize=${pageSizeValue}`,
-        { shallow: true }
-      );
+      router.push({
+        pathname: router.pathname,
+        query: {
+          page: pageValue,
+          pageSize: pageSizeValue,
+        },
+      });
     }
-  }, []);
+  }, [pageValue, pageSizeValue]);
 
   return (
     <Wrap>
