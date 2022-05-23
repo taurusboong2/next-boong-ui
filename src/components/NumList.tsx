@@ -2,7 +2,6 @@ import React, { FC, useState, useMemo } from 'react';
 import styled from 'styled-components';
 import _ from 'lodash';
 import { useRouter } from 'next/router';
-import Link from 'next/link';
 
 interface currentPageType {
   startIndex: number;
@@ -18,8 +17,6 @@ type Props = {
 };
 
 const Articles: FC<Props> = ({ page, setPage, pageSize, numPage, pageCount }) => {
-  const router = useRouter();
-
   const NumberPage = Number(page);
 
   const pageList: number[] = useMemo(() => {

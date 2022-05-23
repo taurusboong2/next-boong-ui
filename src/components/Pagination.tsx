@@ -17,13 +17,13 @@ const ArticleList = ({ data }) => {
     return Math.ceil(totalSize / Number(pageSize));
   }, [totalSize, pageSize]);
 
-  useEffect(() => {
-    if (page !== router.query.page) {
-      router.push(`?page=${page}&pageSize=${pageSize}`, `/pagination?page=${page}&pageSize=${pageSize}`, {
-        shallow: true,
-      });
-    }
-  }, [page, pageSize]);
+  // useEffect(() => {
+  //   if (page !== router.query.page) {
+  //     router.push(`?page=${page}&pageSize=${pageSize}`, `/pagination?page=${page}&pageSize=${pageSize}`, {
+  //       shallow: true,
+  //     });
+  //   }
+  // }, [page, pageSize]);
 
   const onHandlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const newSize = e.currentTarget.value;

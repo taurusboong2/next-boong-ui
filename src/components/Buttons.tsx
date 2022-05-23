@@ -15,9 +15,9 @@ const Buttons = () => {
         </Link>
       </Button>
       <Button icon>
-        <Link href="">
+        <div onClick={() => router.back()}>
           <Icon name="long arrow alternate left" />
-        </Link>
+        </div>
       </Button>
     </Wrap>
   );

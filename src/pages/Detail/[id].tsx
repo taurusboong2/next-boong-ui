@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { useArticleDetail, useDeleteArticle } from '../../hooks/article.hook';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Buttons from '../../components/Buttons';
 
 const Detail = () => {
   const router = useRouter();
@@ -28,6 +29,7 @@ const Detail = () => {
   return (
     <Wrap>
       <Header title="Article Detail" />
+      <Buttons />
       <ContentWrap>
         <Card.Group>
           <Card

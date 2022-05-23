@@ -28,10 +28,19 @@ const Home: NextPage = () => {
   }, [router.isReady]);
 
   useEffect(() => {
-    router.push(`/?page=${page}&pageSize=${pageSize}`, `/pagination?page=${page}&pageSize=${pageSize}`, {
-      shallow: true,
-    });
-  }, [page, pageSize]);
+    if (pageValue && pageSizeValue) {
+      return;
+    }
+    setPageValue(page);
+    setPageSizeValue(pageSize);
+    router.push(
+      `/?page=${pageValue}&pageSize=${pageSizeValue}`,
+      `/pagination?page=${pageValue}&pageSize=${pageSizeValue}`,
+      {
+        shallow: true,
+      }
+    );
+  }, [pageValue, pageSizeValue]);
 
   return (
     <Wrap>
