@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react';
+import React, { useMemo } from 'react';
 import styled from 'styled-components';
 import { Card } from 'semantic-ui-react';
 import { useRouter } from 'next/router';
@@ -16,14 +16,6 @@ const ArticleList = ({ data }) => {
     if (!totalSize || !pageSize) return 0;
     return Math.ceil(totalSize / Number(pageSize));
   }, [totalSize, pageSize]);
-
-  // useEffect(() => {
-  //   if (page !== router.query.page) {
-  //     router.push(`?page=${page}&pageSize=${pageSize}`, `/pagination?page=${page}&pageSize=${pageSize}`, {
-  //       shallow: true,
-  //     });
-  //   }
-  // }, [page, pageSize]);
 
   const onHandlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const newSize = e.currentTarget.value;

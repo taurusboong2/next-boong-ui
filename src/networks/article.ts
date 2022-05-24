@@ -2,7 +2,7 @@ import { api } from '../common/api';
 import { ArticleListRes, ArticleDetailRes, ArticleCreateValue } from '../types/article';
 import { sleep } from '../common/utils';
 
-export const fetchArticleList = async (page: number | string | string[], pageSize: number | string | string[]) => {
+export const fetchArticleList = async (page?: number | string | string[], pageSize?: number | string | string[]) => {
   const response = await api.get<ArticleListRes>(
     `/api/articles/?pagination[page]=${page}&pagination[pageSize]=${pageSize}`
   );

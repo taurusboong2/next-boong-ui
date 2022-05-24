@@ -14,8 +14,6 @@ const Home: NextPage = () => {
   const [pageSizeValue, setPageSizeValue] = useState<any>(10);
 
   const { page = 1, pageSize = 10 } = router.query;
-  console.log(`page: `, page);
-  console.log(`pageSize: `, pageSize);
 
   const { articlesData, totalSize, pageCount } = useArticleList(page, pageSize);
 

@@ -7,10 +7,14 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Buttons from '../../components/Buttons';
 
-const Detail = () => {
+import { GetServerSideProps } from 'next';
+
+const Detail = ({ id }) => {
   const router = useRouter();
 
-  const { id } = router.query;
+  console.log(id);
+
+  // const { id } = router.query;
   const { article } = useArticleDetail(id);
   const { deleteArticle, isdelete } = useDeleteArticle();
 
@@ -55,6 +59,16 @@ const Detail = () => {
 };
 
 export default Detail;
+
+export const getServerSideProps: GetServerSideProps = async context => {
+  const { id } = context.params || undefined;
+
+  return {
+    props: {
+      id: id,
+    },
+  };
+};
 
 const Wrap = styled.div``;
 
