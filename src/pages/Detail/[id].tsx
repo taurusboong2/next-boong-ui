@@ -8,14 +8,38 @@ import Link from 'next/link';
 import Buttons from '../../components/Buttons';
 
 import { GetServerSideProps } from 'next';
+import axios from 'axios';
 
-const Detail = ({ id }) => {
+export const getServerSideProps: GetServerSideProps = async context => {
+  const id = context.params;
+  const apiUrl = `http://localhost:1337//api/articles/${id}`;
+  const res = await axios.get(apiUrl);
+  const data = res.data;
+
+  if (!data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      data: res,
+      id,
+    },
+  };
+};
+
+const Detail = ({ data, id }) => {
   const router = useRouter();
 
+  console.log(data);
   console.log(id);
 
+  // const { article } = data;
+
   // const { id } = router.query;
-  const { article } = useArticleDetail(id);
+  // const { article } = useArticleDetail(id);
   const { deleteArticle, isdelete } = useDeleteArticle();
 
   const handleRemove = async () => {
@@ -23,52 +47,47 @@ const Detail = ({ id }) => {
     router.push(`/?page=1&pageSize=10`, `/pagination?page=1&pageSize=10`, { shallow: true });
   };
 
-  if (!article) {
-    return <div>로딩중...</div>;
-  }
-  if (isdelete) {
-    return <div>삭제중...</div>;
-  }
+  // if (!article) {
+  //   return <div>로딩중...</div>;
+  // }
+  // if (isdelete) {
+  //   return <div>삭제중...</div>;
+  // }
 
   return (
-    <Wrap>
-      <Header title="Article Detail" />
-      <Buttons />
-      <ContentWrap>
-        <Card.Group>
-          <Card
+    <>
+      {data && (
+        <Wrap>
+          <Header title="Article Detail" />
+          <Buttons />
+          <ContentWrap>
+            <Card.Group>
+              {/* <Card
             fluid
             className="card"
             color="red"
             header={article?.attributes.title}
             meta={article?.id}
             description={article?.attributes.description}
-          />
-        </Card.Group>
-      </ContentWrap>
-      <BtnWrap>
-        <button className="deleteBtn" onClick={handleRemove}>
-          삭제
-        </button>
-        <button className="patchBtn">
-          <Link href={`/Patch/${id}`}>수정</Link>
-        </button>
-      </BtnWrap>
-    </Wrap>
+          /> */}
+            </Card.Group>
+          </ContentWrap>
+          <BtnWrap>
+            <button className="deleteBtn" onClick={handleRemove}>
+              삭제
+            </button>
+            <button className="patchBtn">
+              <Link href={`/Patch/${id}`}>수정</Link>
+            </button>
+          </BtnWrap>
+        </Wrap>
+      )}
+      <p>오류오류</p>
+    </>
   );
 };
 
 export default Detail;
-
-export const getServerSideProps: GetServerSideProps = async context => {
-  const { id } = context.params || undefined;
-
-  return {
-    props: {
-      id: id,
-    },
-  };
-};
 
 const Wrap = styled.div``;
 
