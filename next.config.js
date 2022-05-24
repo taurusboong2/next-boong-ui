@@ -4,6 +4,9 @@ const nextConfig = {
   reactStrictMode: false,
   presets: ['next/babel'],
   plugins: [['babel-plugin-styled-components', { fileName: true, displayName: true, pure: true }]],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
   async rewrites() {
     return [
       {

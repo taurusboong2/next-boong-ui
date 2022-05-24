@@ -10,7 +10,7 @@ const Create = () => {
   const { postArticle, iscreating } = useCreateArticle();
 
   const titleInputRef = useRef<HTMLInputElement>(null);
-  const descriptionInputRef = useRef<HTMLTextAreaElement>(null);
+  const descriptionInputRef = useRef<HTMLInputElement>(null);
 
   const handleSubmit = async () => {
     if (!titleInputRef.current?.value) {
