@@ -10,7 +10,7 @@ const ArticleList = ({ data }) => {
 
   const { page, pageSize } = router.query;
 
-  const { articlesData, totalSize, pageCount } = data;
+  const { articleData, totalSize, pageCount } = data;
 
   const numPage = useMemo(() => {
     if (!totalSize || !pageSize) return 0;
@@ -28,7 +28,7 @@ const ArticleList = ({ data }) => {
     });
   };
 
-  if (!articlesData) {
+  if (!articleData) {
     return <div>로딩중..</div>;
   } else if (!pageSize) {
     return <>페이지 사이즈 오류</>;
@@ -48,7 +48,7 @@ const ArticleList = ({ data }) => {
 
       <CardWrap>
         <Card.Group centered>
-          {articlesData.map((e, i) => {
+          {articleData.map((e, i) => {
             return (
               <span key={i} onClick={() => router.push(`/Detail/${e.id}`)}>
                 <Card

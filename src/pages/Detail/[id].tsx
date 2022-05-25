@@ -2,10 +2,11 @@ import React from 'react';
 import { Card } from 'semantic-ui-react';
 import Header from '../../components/Header';
 import styled from 'styled-components';
-import { useArticleDetail, useDeleteArticle } from '../../hooks/article.hook';
+import { useDeleteArticle } from '../../hooks/article.hook';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Buttons from '../../components/Buttons';
+import Head from 'next/head';
 
 import { GetServerSideProps } from 'next';
 import axios from 'axios';
@@ -45,30 +46,36 @@ const Detail = ({ data, id }) => {
 
   return (
     <>
-      <Wrap>
-        <Header title="Article Detail" />
-        <Buttons />
-        <ContentWrap>
-          <Card.Group>
-            <Card
-              fluid
-              className="card"
-              color="red"
-              header={article?.attributes.title}
-              meta={article?.id}
-              description={article?.attributes.description}
-            />
-          </Card.Group>
-        </ContentWrap>
-        <BtnWrap>
-          <button className="deleteBtn" onClick={handleRemove}>
-            삭제
-          </button>
-          <button className="patchBtn">
-            <Link href={`/Patch/${id}`}>수정</Link>
-          </button>
-        </BtnWrap>
-      </Wrap>
+      {article && (
+        <Wrap>
+          <Head>
+            <title>ArticleDetail | TauBoong</title>
+            <meta name="description" content={article?.attributes.description} />
+          </Head>
+          <Header title="Article Detail" />
+          <Buttons />
+          <ContentWrap>
+            <Card.Group>
+              <Card
+                fluid
+                className="card"
+                color="red"
+                header={article?.attributes.title}
+                meta={article?.id}
+                description={article?.attributes.description}
+              />
+            </Card.Group>
+          </ContentWrap>
+          <BtnWrap>
+            <button className="deleteBtn" onClick={handleRemove}>
+              삭제
+            </button>
+            <button className="patchBtn">
+              <Link href={`/Patch/${id}`}>수정</Link>
+            </button>
+          </BtnWrap>
+        </Wrap>
+      )}
     </>
   );
 };
