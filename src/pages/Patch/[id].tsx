@@ -3,29 +3,40 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import Header from '../../components/Header';
 import Buttons from '../../components/Buttons';
-import { useArticleDetail, useUpdateArticle } from '../../hooks/article.hook';
+import { useUpdateArticle } from '../../hooks/article.hook';
+import { GetServerSideProps } from 'next';
+import { fetchArticleDetail } from '../../networks/article';
+import Head from 'next/head';
 
-const PatchArticle = () => {
+export const getServerSideProps: GetServerSideProps = async context => {
+  const { id } = context.params;
+  const res = await fetchArticleDetail(id);
+  const data = res.data.data;
+
+  return {
+    props: {
+      data: data,
+      id: id,
+    },
+  };
+};
+
+const PatchArticle = ({ data, id }) => {
   const router = useRouter();
-  const { id } = router.query;
 
   const titleInputRef = useRef<HTMLInputElement>(null);
   const descriptionInputRef = useRef<HTMLInputElement>(null);
 
-  const { article } = useArticleDetail(id);
   const { update, isSubmitting } = useUpdateArticle();
 
-  console.log(id);
-
   useEffect(() => {
-    if (article) {
+    if (data) {
       if (titleInputRef.current && descriptionInputRef.current) {
-        titleInputRef.current.value = article.attributes.title;
-        descriptionInputRef.current.value = article.attributes.description;
+        titleInputRef.current.value = data.attributes.title;
+        descriptionInputRef.current.value = data.attributes.description;
       }
     }
-  }, [article]);
-
+  }, [data]);
   const handleSubmit = async () => {
     if (!titleInputRef.current?.value) {
       alert('타이틀란이 공란입니다.');
@@ -47,26 +58,35 @@ const PatchArticle = () => {
   };
 
   return (
-    <Wrap>
-      <Header title="Patch Article" />
-      <Buttons />
-      <InputWrap>
-        <h2>게시글 수정하기</h2>
-        <div>
-          <input ref={titleInputRef} type="text" name="title" id="title" />
-        </div>
-        <div>
-          <input ref={descriptionInputRef} type="text" name="description" id="description" />
-        </div>
-        <input
-          id="submit_btn"
-          type="button"
-          value={isSubmitting ? '전송중..' : '수정'}
-          disabled={isSubmitting}
-          onClick={handleSubmit}
-        />
-      </InputWrap>
-    </Wrap>
+    <>
+      {data && (
+        <>
+          <Head>
+            <title>ArticlePatch | TauBoong</title>
+          </Head>
+          <Wrap>
+            <Header title="Patch Article" />
+            <Buttons />
+            <InputWrap>
+              <h2>게시글 수정하기</h2>
+              <div>
+                <input ref={titleInputRef} type="text" name="title" id="title" />
+              </div>
+              <div>
+                <input ref={descriptionInputRef} type="text" name="description" id="description" />
+              </div>
+              <input
+                id="submit_btn"
+                type="button"
+                value={isSubmitting ? '전송중..' : '수정'}
+                disabled={isSubmitting}
+                onClick={handleSubmit}
+              />
+            </InputWrap>
+          </Wrap>
+        </>
+      )}
+    </>
   );
 };
 
