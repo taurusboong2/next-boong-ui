@@ -10,7 +10,7 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/:pagination*',
+        source: '/pagination/:page*',
         destination: '/',
       },
     ];

@@ -7,14 +7,12 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Buttons from '../../components/Buttons';
 import Head from 'next/head';
-
+import { fetchArticleDetail } from '../../networks/article';
 import { GetServerSideProps } from 'next';
-import axios from 'axios';
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { id } = context.params;
-  const apiUrl = `http://localhost:1337/api/articles/${id}`;
-  const res = await axios.get(apiUrl);
+  const res = await fetchArticleDetail(id);
   const data = res.data;
 
   return {
