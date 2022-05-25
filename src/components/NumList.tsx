@@ -19,6 +19,8 @@ type Props = {
 const Articles: FC<Props> = ({ page, setPage, pageSize, numPage, pageCount }) => {
   const NumberPage = Number(page);
 
+  const router = useRouter();
+
   const pageList: number[] = useMemo(() => {
     const pageCountArray = _.range(1, pageCount + 1);
     return pageCountArray;
@@ -33,9 +35,9 @@ const Articles: FC<Props> = ({ page, setPage, pageSize, numPage, pageCount }) =>
 
   const goPage = (number): void => {
     setPage(number);
-    // router.push(`?page=${number}&pageSize=${pageSize}`, `/pagination?page=${number}&pageSize=${pageSize}`, {
-    //   shallow: true,
-    // });
+    router.push(`?page=${number}&pageSize=${pageSize}`, `/pagination?page=${number}&pageSize=${pageSize}`, {
+      shallow: false,
+    });
 
     if (number + 1 > currentPage.endIndex) {
       setCurrentPage({
@@ -99,9 +101,7 @@ const Articles: FC<Props> = ({ page, setPage, pageSize, numPage, pageCount }) =>
           <PageSpan
             onClick={() => setPage(number)}
             className={NumberPage === number ? 'page-link active' : 'page-link'}>
-            <span className="numSpan" onClick={goPage}>
-              {number}
-            </span>
+            <span className="numSpan">{number}</span>
           </PageSpan>
         </PageLi>
       );

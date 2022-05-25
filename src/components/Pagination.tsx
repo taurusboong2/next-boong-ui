@@ -19,12 +19,12 @@ const ArticleList = ({ data }) => {
 
   const onHandlePageSizeChange = (e: React.ChangeEvent<HTMLSelectElement>): void => {
     const newSize = e.currentTarget.value;
-    router.push(`?page=1&pageSize=${newSize}`, `/pagination?page=1&pageSize=${newSize}`, { shallow: true });
+    router.push(`?page=1&pageSize=${newSize}`, `/pagination?page=1&pageSize=${newSize}`, { shallow: false });
   };
 
   const onHandlePageChange = (newPage: number) => {
     router.push(`?page=${newPage}&pageSize=${pageSize}`, `/pagination?page=${newPage}&pageSize=${pageSize}`, {
-      shallow: true,
+      shallow: false,
     });
   };
 
