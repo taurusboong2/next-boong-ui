@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { useRouter } from 'next/router';
-import { GetServerSideProps } from 'next';
+import { GetServerSideProps, NextPage } from 'next';
 import { fetchArticleList } from '../networks/article';
+import { IndexProps } from '../types/article';
 
 import Header from '../components/Header';
 import ArticleList from '../components/Pagination';
@@ -27,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   };
 };
 
-const Home = ({ data }) => {
+const Home: NextPage<IndexProps> = ({ data }) => {
   const router = useRouter();
   const [pageValue, setPageValue] = useState<any>(1);
   const [pageSizeValue, setPageSizeValue] = useState<any>(10);

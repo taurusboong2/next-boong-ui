@@ -34,3 +34,11 @@ export type ArticleCreateValue = {
     description: string;
   };
 };
+
+export interface IndexProps {
+  data: {
+    articleData: ArticleListItem[];
+    totalSize: number;
+    pageCount: number;
+  };
+}
