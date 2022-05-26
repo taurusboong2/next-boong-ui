@@ -9,6 +9,13 @@ import Buttons from '../../components/Buttons';
 import Head from 'next/head';
 import { fetchArticleDetail } from '../../networks/article';
 import { GetServerSideProps } from 'next';
+import { NextPage } from 'next';
+import { ArticleDetailRes } from '../../types/article';
+
+type Props = {
+  data: ArticleDetailRes;
+  id: number | string;
+};
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { id } = context.params;
@@ -23,7 +30,7 @@ export const getServerSideProps: GetServerSideProps = async context => {
   };
 };
 
-const Detail = ({ data, id }) => {
+const Detail: NextPage<Props> = ({ data, id }) => {
   const router = useRouter();
 
   const article = data.data;

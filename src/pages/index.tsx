@@ -3,11 +3,19 @@ import styled from 'styled-components';
 import { useRouter } from 'next/router';
 import { GetServerSideProps, NextPage } from 'next';
 import { fetchArticleList } from '../networks/article';
-import { IndexProps } from '../types/article';
+import { ArticleListItem } from '../types/article';
 
 import Header from '../components/Header';
 import ArticleList from '../components/Pagination';
 import Buttons from '../components/Buttons';
+
+type IndexProps = {
+  data: {
+    articleData: ArticleListItem[];
+    totalSize: number;
+    pageCount: number;
+  };
+};
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { page = 1, pageSize = 10 } = context.query;

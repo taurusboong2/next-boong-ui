@@ -7,22 +7,31 @@ import { useUpdateArticle } from '../../hooks/article.hook';
 import { GetServerSideProps } from 'next';
 import { fetchArticleDetail } from '../../networks/article';
 import Head from 'next/head';
+import { NextPage } from 'next';
+import { ArticleDetailRes } from '../../types/article';
+
+type Props = {
+  detailData: ArticleDetailRes;
+  id: number | string;
+};
 
 export const getServerSideProps: GetServerSideProps = async context => {
   const { id } = context.params;
   const res = await fetchArticleDetail(id);
-  const data = res.data.data;
+  const data = res.data;
 
   return {
     props: {
-      data: data,
+      detailData: data,
       id: id,
     },
   };
 };
 
-const PatchArticle = ({ data, id }) => {
+const PatchArticle: NextPage<Props> = ({ detailData, id }) => {
   const router = useRouter();
+
+  const data = detailData.data;
 
   const titleInputRef = useRef<HTMLInputElement>(null);
   const descriptionInputRef = useRef<HTMLInputElement>(null);
